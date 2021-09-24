@@ -9,6 +9,7 @@ namespace NeonImpact.PlayScene
         private void Awake()
         {
             highScoreData.currentHighScore = 0;
+            highScoreData.allTimeHighScore = highScoreData.GetPlayerPrefsAllTimeHighScore();
         }
 
         private void Start()
@@ -17,8 +18,10 @@ namespace NeonImpact.PlayScene
             highScoreData.currentScore = 0;
         }
 
-        private void SaveHighScores()
+        public void SaveHighScores()
         {
+            highScoreData.currentScore = GameManager.Instance.currentScore;
+
             if (highScoreData.currentScore > highScoreData.allTimeHighScore)
             {
                 highScoreData.allTimeHighScore = highScoreData.currentScore;
@@ -28,15 +31,8 @@ namespace NeonImpact.PlayScene
             {
                 highScoreData.currentHighScore = highScoreData.currentScore;
             }
+
+            highScoreData.SetPlayerPrefsForHighScores();
         }
-
-        private void Update()
-        {
-            SaveHighScores();
-
-            highScoreData.currentScore = GameManager.Instance.currentScore;
-        }
-
-   
     }
 }

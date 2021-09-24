@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace NeonImpact.PlayScene
@@ -6,8 +7,9 @@ namespace NeonImpact.PlayScene
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance;
+        private EnemySpawner _enemySpawner;
         public event Action GameStarted, GameLost, ScoreIncremented;
-        [SerializeField] private bool _isPlaying = true;
+        [SerializeField] private bool isPlaying = true;
         [HideInInspector] public int currentScore;
 
         private void Awake()
@@ -22,23 +24,27 @@ namespace NeonImpact.PlayScene
             }
         }
 
+        private void Start()
+        {
+            StartCoroutine(StartSinglePlayerGame());
+        }
+
+        private IEnumerator StartSinglePlayerGame()
+        {
+            yield return new WaitForSeconds(.1f);
+            StartGame();
+        }
+
         private void Update()
         {
-            if (_isPlaying == false)
-            {
-                Time.timeScale = 0f;
-            }
-            else
-            {
-                Time.timeScale = 1f;
-            }
+            Time.timeScale = isPlaying == false ? 0f : 1f;
         }
 
         public void StartGame()
         {
-            if (_isPlaying == false)
+            if (isPlaying == false)
             {
-                _isPlaying = true;
+                isPlaying = true;
             }
 
             GameStarted?.Invoke();
@@ -46,9 +52,9 @@ namespace NeonImpact.PlayScene
 
         public void LoseGame()
         {
-            if (_isPlaying == true)
+            if (isPlaying)
             {
-                _isPlaying = false;
+                isPlaying = false;
             }
 
             GameLost?.Invoke();

@@ -8,7 +8,7 @@ namespace NeonImpact.PlayScene
         public TMP_Text scoreText;
         private const int StartingScore = 0;
         private int _currentScore;
-    
+        
         void Start()
         {
             GameManager.Instance.ScoreIncremented += IncreaseScore;
@@ -17,7 +17,7 @@ namespace NeonImpact.PlayScene
             DisplayScore();
         }
 
-        public void IncreaseScore()
+        private void IncreaseScore()
         {
             _currentScore++;
             GameManager.Instance.currentScore = _currentScore;
@@ -27,6 +27,7 @@ namespace NeonImpact.PlayScene
         private void DisplayScore()
         {
             scoreText.text = _currentScore.ToString();
+          
         }
 
         public void ResetScore()

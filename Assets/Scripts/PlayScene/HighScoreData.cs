@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace NeonImpact.PlayScene
 {
@@ -8,6 +9,16 @@ namespace NeonImpact.PlayScene
         public int currentHighScore;
         public int allTimeHighScore;
         public int currentScore;
-    
+
+        public void SetPlayerPrefsForHighScores()
+        {
+            PlayerPrefs.SetInt("CurrentHighScore",currentHighScore);
+            PlayerPrefs.SetInt("AllTimeHighScore",allTimeHighScore);
+        }
+
+        public int GetPlayerPrefsAllTimeHighScore()
+        {
+            return PlayerPrefs.GetInt("AllTimeHighScore");
+        }
     }
 }
